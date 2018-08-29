@@ -52,6 +52,7 @@ public class MainActivity extends AppCompatActivity
 
         model = new Model(this.getApplicationContext());
 
+        // Test name generation
         for(int i = 0; i < 5; i++) {
             String name = model.predictName(Gender.FEMALE);
             Log.d("NAME", "PREDICTED FEMALE NAME " + (i+1) + ": " + name);
