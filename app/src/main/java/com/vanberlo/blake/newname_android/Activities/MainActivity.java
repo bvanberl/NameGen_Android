@@ -1,5 +1,6 @@
 package com.vanberlo.blake.newname_android.Activities;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -13,17 +14,28 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.ToggleButton;
 
 import com.vanberlo.blake.newname_android.Enumerations.Gender;
 import com.vanberlo.blake.newname_android.ML.Model;
 import com.vanberlo.blake.newname_android.R;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private Model model;
+    private TextView newNameTextView;
+    private ToggleButton genderToggleButton;
+    private ArrayList<String> arrayHistory;
+    private ListView listViewHistory;
+    private  ArrayAdapter<String> stringArrayAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +62,18 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        model = new Model(this.getApplicationContext());
+        //Assigning view IDs
+        newNameTextView = (TextView) findViewById(R.id.textViewName);
+        genderToggleButton = (ToggleButton) findViewById(R.id.toggleGender);
+        listViewHistory = (ListView) findViewById(R.id.listViewHistory);
+
+        //Someting with the list
+        arrayHistory = new ArrayList<String>();
+        stringArrayAdapter =new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_1,arrayHistory);
+        listViewHistory.setAdapter(stringArrayAdapter);
+
+        // Initialize model
+        model = new Model(getApplicationContext());
 
         // Test name generation
         for(int i = 0; i < 5; i++) {
@@ -121,6 +144,27 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void onGenerateNameBtnClicked(View v){
+    }
 
+    public void sendMessage(View v){
+        boolean male = (genderToggleButton).isChecked();
+        String generatedNameLower = "";
+
+        if (male){
+            generatedNameLower = model.predictName(Gender.MALE);
+            newNameTextView.setTextColor(Color.BLUE);
+        }
+        else{
+            generatedNameLower = model.predictName(Gender.FEMALE);
+            newNameTextView.setTextColor(Color.RED);
+
+        }
+
+        String generatedNameUpper = generatedNameLower.substring(0, 1).toUpperCase() + generatedNameLower.substring(1);
+
+        arrayHistory.add(0,generatedNameUpper);
+        stringArrayAdapter.notifyDataSetChanged();
+
+        newNameTextView.setText(generatedNameUpper);
     }
 }

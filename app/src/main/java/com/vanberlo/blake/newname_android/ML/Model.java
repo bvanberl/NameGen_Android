@@ -8,7 +8,6 @@ import com.vanberlo.blake.newname_android.R;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import net.razorvine.pickle.Unpickler;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -89,4 +88,5 @@ public class Model {
 
         return name;
     }
+
 }
