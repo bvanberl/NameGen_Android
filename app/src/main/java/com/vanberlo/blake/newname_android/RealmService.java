@@ -1,3 +1,5 @@
+package com.vanberlo.blake.newname_android;
+
 import com.vanberlo.blake.newname_android.Enumerations.Gender;
 import com.vanberlo.blake.newname_android.Models.Name;
 
@@ -9,7 +11,7 @@ public class RealmService {
     // Realm object for this thread
     private Realm realm;
 
-    RealmService(){
+    public RealmService(){
         realm = Realm.getDefaultInstance(); // Get a realm instance for the thread
     }
 

@@ -1,5 +1,8 @@
 package com.vanberlo.blake.newname_android.Activities;
 
+import android.net.Uri;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -14,28 +17,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.ToggleButton;
 
-import com.vanberlo.blake.newname_android.Enumerations.Gender;
-import com.vanberlo.blake.newname_android.ML.Model;
+import com.vanberlo.blake.newname_android.Fragments.FavouritesFragment;
+import com.vanberlo.blake.newname_android.Fragments.HomeFragment;
 import com.vanberlo.blake.newname_android.R;
 
-import java.io.IOException;
-import java.util.ArrayList;
-
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, HomeFragment.OnFragmentInteractionListener, FavouritesFragment.OnFragmentInteractionListener {
 
-    private Model model;
-    private TextView newNameTextView;
-    private ToggleButton genderToggleButton;
-    private ArrayList<String> arrayHistory;
-    private ListView listViewHistory;
-    private  ArrayAdapter<String> stringArrayAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,15 +32,6 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -62,28 +42,10 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        //Assigning view IDs
-        newNameTextView = (TextView) findViewById(R.id.textViewName);
-        genderToggleButton = (ToggleButton) findViewById(R.id.toggleGender);
-        listViewHistory = (ListView) findViewById(R.id.listViewHistory);
+        Fragment homeFragment = new HomeFragment();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.frame_layout_main, homeFragment).commit();
 
-        //Someting with the list
-        arrayHistory = new ArrayList<String>();
-        stringArrayAdapter =new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_1,arrayHistory);
-        listViewHistory.setAdapter(stringArrayAdapter);
-
-        // Initialize model
-        model = new Model(getApplicationContext());
-
-        // Test name generation
-        for(int i = 0; i < 5; i++) {
-            String name = model.predictName(Gender.FEMALE);
-            Log.d("NAME", "PREDICTED FEMALE NAME " + (i+1) + ": " + name);
-        }
-        for(int i = 0; i < 5; i++) {
-            String name = model.predictName(Gender.MALE);
-            Log.d("NAME", "PREDICTED MALE NAME " + (i+1) + ": " + name);
-        }
     }
 
     @Override
@@ -124,18 +86,14 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
+        if (id == R.id.nav_home) {
+            Fragment homeFragment = new HomeFragment();
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            fragmentManager.beginTransaction().replace(R.id.frame_layout_main, homeFragment).commit();
+        } else if (id == R.id.nav_favourites) {
+            Fragment favFragment = new FavouritesFragment();
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            fragmentManager.beginTransaction().replace(R.id.frame_layout_main, favFragment).commit();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -143,28 +101,8 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
-    public void onGenerateNameBtnClicked(View v){
-    }
 
-    public void sendMessage(View v){
-        boolean male = (genderToggleButton).isChecked();
-        String generatedNameLower = "";
+    public void onFragmentInteraction(Uri uri){
 
-        if (male){
-            generatedNameLower = model.predictName(Gender.MALE);
-            newNameTextView.setTextColor(Color.BLUE);
-        }
-        else{
-            generatedNameLower = model.predictName(Gender.FEMALE);
-            newNameTextView.setTextColor(Color.RED);
-
-        }
-
-        String generatedNameUpper = generatedNameLower.substring(0, 1).toUpperCase() + generatedNameLower.substring(1);
-
-        arrayHistory.add(0,generatedNameUpper);
-        stringArrayAdapter.notifyDataSetChanged();
-
-        newNameTextView.setText(generatedNameUpper);
     }
 }
