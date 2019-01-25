@@ -8,14 +8,14 @@
     android:gravity="center_horizontal">
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="fill_parent"
+        android:layout_height="45dp"
         android:text="Saved names" />
 
     <ListView
         android:id="@+id/listViewFavourites"
         android:layout_width="337dp"
-        android:layout_height="255dp"
+        android:layout_height="376dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
@@ -23,5 +23,17 @@
         android:visibility="visible"
         tools:background="@android:color/darker_gray"
         tools:tag="History" />
+
+    <TextView
+        android:id="@+id/textViewName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textIsSelectable="true"/>
+
+    <Button
+        android:id="@+id/buttonRemove"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Remove" />
 
 </LinearLayout>

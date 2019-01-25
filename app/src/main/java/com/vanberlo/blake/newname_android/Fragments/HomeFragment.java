@@ -1,4 +1,8 @@
 package com.vanberlo.blake.newname_android.Fragments;
+import com.vanberlo.blake.newname_android.Models.Name;
+import com.vanberlo.blake.newname_android.R;
+import com.vanberlo.blake.newname_android.RealmService;
+import io.realm.RealmResults;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -8,10 +12,12 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.vanberlo.blake.newname_android.Enumerations.Gender;
@@ -40,6 +46,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private ArrayList<String> arrayHistory;
     private ListView listViewHistory;
     private ArrayAdapter<String> stringArrayAdapter;
+
+    private int latestSelectedIndex;
 
     // Required empty public constructor
     public HomeFragment() {}
@@ -71,10 +79,20 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         listViewHistory.setAdapter(stringArrayAdapter);
 
         // Set the buttons' on click listeners to this fragment
-        Button button = (Button) rootView.findViewById(R.id.button);
+        Button buttonFavourite = (Button) rootView.findViewById(R.id.buttonFavourite);
         Button buttonName = (Button) rootView.findViewById(R.id.buttonName);
-        button.setOnClickListener(this);
+
+        buttonFavourite.setOnClickListener(this);
         buttonName.setOnClickListener(this);
+
+        listViewHistory.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                latestSelectedIndex = position;
+                String selected =(listViewHistory.getItemAtPosition(position).toString());
+                newNameTextView.setText(selected);
+            }
+        });
 
         return rootView;
     }
@@ -114,15 +132,16 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.buttonName:
-                sendMessage();
+                onGenetateNameBtnClicked();
                 break;
-            case R.id.button:
-                onGenerateNameBtnClicked();
+            case R.id.buttonFavourite:
+                onFavouriteBtnClicked();
                 break;
+
         }
     }
 
-    public void sendMessage(){
+    public void onGenetateNameBtnClicked(){
         boolean male = (genderToggleButton).isChecked();
         String generatedNameLower = "";
 
@@ -141,9 +160,28 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         arrayHistory.add(0,generatedNameUpper);
         stringArrayAdapter.notifyDataSetChanged();
 
+        listViewHistory.setClickable(true);
+
         newNameTextView.setText(generatedNameUpper);
     }
 
-    public void onGenerateNameBtnClicked(){
+    public void onFavouriteBtnClicked(){
+        Context context = getApplicationContext();
+        String selectedName = listViewHistory.getItemAtPosition(latestSelectedIndex).toString();
+        CharSequence text = selectedName + "saved to Favourites!";
+        int duration = Toast.LENGTH_SHORT;
+        Toast toast = Toast.makeText(context, text, duration);
+        toast.show();
+
+        boolean male = (genderToggleButton).isChecked();
+
+        RealmService realmService;
+        realmService = new RealmService();
+        if(male){
+            realmService.insertName( selectedName, Gender.MALE);
+        }
+        else{
+            realmService.insertName( selectedName, Gender.FEMALE);
+        }
     }
 }

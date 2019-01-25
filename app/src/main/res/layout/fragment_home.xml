@@ -6,22 +6,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center_horizontal">
-    
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Press the button below to generate 5 names." />
-
-    <Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:paddingLeft="40dp"
-        android:paddingRight="40dp"
-        android:text="Generate"
-        android:textSize="20sp"/>
 
     <TextView
         android:id="@+id/textViewName"
@@ -41,6 +25,20 @@
         tools:elevation="4dp"
         tools:textSize="30sp" />
 
+    <Button
+        android:id="@+id/buttonName"
+        android:layout_width="204dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="0dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="0dp"
+        android:text="Discover a Name"
+        app:layout_constraintBottom_toTopOf="@+id/listViewHistory"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toggleGender" />
+
     <ToggleButton
         android:id="@+id/toggleGender"
         android:layout_width="111dp"
@@ -57,20 +55,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewName" />
 
-    <Button
-        android:id="@+id/buttonName"
-        android:layout_width="204dp"
-        android:layout_height="46dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:text="Discover a Name"
-        app:layout_constraintBottom_toTopOf="@+id/listViewHistory"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toggleGender" />
-
     <ListView
         android:id="@+id/listViewHistory"
         android:layout_width="337dp"
@@ -79,11 +63,17 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:background="@android:color/darker_gray"
-        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/buttonName"
         tools:tag="History" />
+
+    <Button
+        android:id="@+id/buttonFavourite"
+        android:layout_marginTop="16dp"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:text="Save to Favourites" />
 
 </LinearLayout>
