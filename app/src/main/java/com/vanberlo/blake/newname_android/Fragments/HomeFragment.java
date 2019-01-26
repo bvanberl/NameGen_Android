@@ -5,6 +5,7 @@ import com.vanberlo.blake.newname_android.RealmService;
 import io.realm.RealmResults;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
@@ -47,6 +48,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private ListView listViewHistory;
     private ArrayAdapter<String> stringArrayAdapter;
 
+    private Button buttonSend_;
+    private Button buttonFavourites_;
+
     private int latestSelectedIndex;
 
     // Required empty public constructor
@@ -81,9 +85,14 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         // Set the buttons' on click listeners to this fragment
         Button buttonFavourite = (Button) rootView.findViewById(R.id.buttonFavourite);
         Button buttonName = (Button) rootView.findViewById(R.id.buttonName);
+        Button buttonSend = (Button) rootView.findViewById(R.id.buttonSend);
+
+        buttonSend_ = buttonSend;
+        buttonFavourites_ = buttonFavourite;
 
         buttonFavourite.setOnClickListener(this);
         buttonName.setOnClickListener(this);
+        buttonSend.setOnClickListener(this);
 
         listViewHistory.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -137,6 +146,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             case R.id.buttonFavourite:
                 onFavouriteBtnClicked();
                 break;
+            case R.id.buttonSend:
+                onSendBtnClicked();
+                break;
 
         }
     }
@@ -161,8 +173,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         stringArrayAdapter.notifyDataSetChanged();
 
         listViewHistory.setClickable(true);
-
         newNameTextView.setText(generatedNameUpper);
+
+        buttonSend_.setEnabled(true);
+        buttonFavourites_.setEnabled(true);
+
+
     }
 
     public void onFavouriteBtnClicked(){
@@ -183,5 +199,17 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         else{
             realmService.insertName( selectedName, Gender.FEMALE);
         }
+    }
+
+    public void onSendBtnClicked(){
+        String selectedName = listViewHistory.getItemAtPosition(latestSelectedIndex).toString();
+
+        Intent myIntent = new Intent(Intent.ACTION_SEND);
+        myIntent.setType("text/plain");
+        String shareBody = "I just created the name "+selectedName+" using ____________";
+        String shareSub = "Check out my new name!";
+        myIntent.putExtra(Intent.EXTRA_SUBJECT,shareSub);
+        myIntent.putExtra(Intent.EXTRA_TEXT,shareBody);
+        startActivity(Intent.createChooser(myIntent,"Share Using..."));
     }
 }

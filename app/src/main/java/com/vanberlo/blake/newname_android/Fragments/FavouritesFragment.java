@@ -52,10 +52,6 @@ public class FavouritesFragment extends Fragment implements View.OnClickListener
         realmService = new RealmService();
         savedNames = realmService.getAllNames();
 
-        
-        //TAKE OUT SOON
-        //realmService.deleteAllNames();
-
         // TEST INSERTING A NAME
         //realmService.insertName( "Blake", Gender.MALE); // Test name
     }

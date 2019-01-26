@@ -1,5 +1,6 @@
 package com.vanberlo.blake.newname_android.Activities;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -18,12 +19,13 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.vanberlo.blake.newname_android.Fragments.AboutFragment;
 import com.vanberlo.blake.newname_android.Fragments.FavouritesFragment;
 import com.vanberlo.blake.newname_android.Fragments.HomeFragment;
 import com.vanberlo.blake.newname_android.R;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, HomeFragment.OnFragmentInteractionListener, FavouritesFragment.OnFragmentInteractionListener {
+        implements NavigationView.OnNavigationItemSelectedListener, HomeFragment.OnFragmentInteractionListener, AboutFragment.OnFragmentInteractionListener, FavouritesFragment.OnFragmentInteractionListener {
 
 
     @Override
@@ -94,6 +96,10 @@ public class MainActivity extends AppCompatActivity
             Fragment favFragment = new FavouritesFragment();
             FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction().replace(R.id.frame_layout_main, favFragment).commit();
+        } else if (id == R.id.nav_about) {
+            Fragment aboutFragment = new AboutFragment();
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            fragmentManager.beginTransaction().replace(R.id.frame_layout_main, aboutFragment).commit();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
