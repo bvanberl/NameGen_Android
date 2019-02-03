@@ -30,19 +30,6 @@
         app:headerLayout="@layout/nav_header_main"
         app:menu="@menu/activity_main_drawer" >
 
-        <TextView
-            android:id="@+id/titleTextView"
-            android:layout_width="188dp"
-            android:layout_height="164dp"
-            android:layout_gravity="top|right"
-            android:layout_marginTop="12dp"
-            android:fontFamily="@font/font_digital"
-            android:text="Name \n Cub"
-            android:textAlignment="center"
-            android:textAppearance="@style/TextAppearance.AppCompat"
-            android:textColor="@color/colorPrimaryDark"
-            android:textSize="55sp" />
-
     </android.support.design.widget.NavigationView>
 
 </android.support.v4.widget.DrawerLayout>

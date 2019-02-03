@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/grey"
     android:gravity="center_horizontal">
 
     <TextView
@@ -15,7 +16,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:background="@android:color/darker_gray"
+        android:background="@color/colorPrimary"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Headline"
         app:layout_constraintBottom_toTopOf="@+id/toggleGender"
@@ -70,28 +71,5 @@
         tools:tag="History" >
 
     </ListView>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/buttonFavourite"
-            android:layout_width="170dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="0dp"
-            android:layout_weight="1"
-            android:text="Save to Favourites"
-            android:enabled="false"/>
-
-        <Button
-            android:id="@+id/buttonSend"
-            android:layout_width="110dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Send to Friends"
-            android:enabled="false"/>
-    </LinearLayout>
 
 </LinearLayout>

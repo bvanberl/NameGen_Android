@@ -48,9 +48,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private ListView listViewHistory;
     private ArrayAdapter<String> stringArrayAdapter;
 
-    private Button buttonSend_;
-    private Button buttonFavourites_;
-
     private int latestSelectedIndex;
 
     // Required empty public constructor
@@ -83,16 +80,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         listViewHistory.setAdapter(stringArrayAdapter);
 
         // Set the buttons' on click listeners to this fragment
-        Button buttonFavourite = (Button) rootView.findViewById(R.id.buttonFavourite);
         Button buttonName = (Button) rootView.findViewById(R.id.buttonName);
-        Button buttonSend = (Button) rootView.findViewById(R.id.buttonSend);
 
-        buttonSend_ = buttonSend;
-        buttonFavourites_ = buttonFavourite;
-
-        buttonFavourite.setOnClickListener(this);
         buttonName.setOnClickListener(this);
-        buttonSend.setOnClickListener(this);
 
         listViewHistory.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -143,13 +133,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             case R.id.buttonName:
                 onGenetateNameBtnClicked();
                 break;
-            case R.id.buttonFavourite:
-                onFavouriteBtnClicked();
-                break;
-            case R.id.buttonSend:
-                onSendBtnClicked();
-                break;
-
         }
     }
 
@@ -174,11 +157,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
         listViewHistory.setClickable(true);
         newNameTextView.setText(generatedNameUpper);
-
-        buttonSend_.setEnabled(true);
-        buttonFavourites_.setEnabled(true);
-
-
     }
 
     public void onFavouriteBtnClicked(){
