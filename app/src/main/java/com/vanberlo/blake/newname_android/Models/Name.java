@@ -24,6 +24,13 @@ public class Name extends RealmObject {
         this.setGender(gender);
     }
 
+    // A temporary Name object
+    public Name(String name, Gender gender){
+        this.setId(-1);
+        this.setName(name);
+        this.setGender(gender);
+    }
+
     public void setId(long id){
         this.id = id;
     }

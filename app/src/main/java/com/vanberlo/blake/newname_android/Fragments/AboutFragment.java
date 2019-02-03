@@ -52,4 +52,6 @@ public class AboutFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         void onFragmentInteraction(Uri uri);
     }
+
+    public void onClick(View v){}
 }
