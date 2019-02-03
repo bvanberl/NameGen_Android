@@ -101,6 +101,9 @@ public class MainActivity extends AppCompatActivity
             FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction().replace(R.id.frame_layout_main, aboutFragment).commit();
         }
+        else if (id == R.id.nav_share) {
+            onShareBtnClicked();
+        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
@@ -110,5 +113,15 @@ public class MainActivity extends AppCompatActivity
 
     public void onFragmentInteraction(Uri uri){
 
+    }
+
+    public void onShareBtnClicked(){
+        Intent myIntent = new Intent(Intent.ACTION_SEND);
+        myIntent.setType("text/plain");
+        String shareSub = "Check out ___________ on the Play Store!";
+        String shareBody = "https://play.google.com/store/apps/details?id=newname_android";
+        myIntent.putExtra(Intent.EXTRA_SUBJECT,shareSub);
+        myIntent.putExtra(Intent.EXTRA_TEXT,shareBody);
+        startActivity(Intent.createChooser(myIntent,"Share Using..."));
     }
 }

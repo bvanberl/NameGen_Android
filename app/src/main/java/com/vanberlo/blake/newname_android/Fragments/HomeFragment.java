@@ -206,7 +206,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
         Intent myIntent = new Intent(Intent.ACTION_SEND);
         myIntent.setType("text/plain");
-        String shareBody = "I just created the name "+selectedName+" using ____________";
+        String shareBody = "I just created the name "+selectedName+" using ____________!";
         String shareSub = "Check out my new name!";
         myIntent.putExtra(Intent.EXTRA_SUBJECT,shareSub);
         myIntent.putExtra(Intent.EXTRA_TEXT,shareBody);
