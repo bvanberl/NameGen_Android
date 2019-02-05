@@ -1,15 +1,9 @@
 package com.vanberlo.blake.newname_android.Activities;
 
-import android.content.Intent;
 import android.net.Uri;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.util.Log;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -28,6 +22,8 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, HomeFragment.OnFragmentInteractionListener, AboutFragment.OnFragmentInteractionListener, FavouritesFragment.OnFragmentInteractionListener {
 
 
+    private Fragment curFragment;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,10 +40,9 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        Fragment homeFragment = new HomeFragment();
+        curFragment = new HomeFragment();
         FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.frame_layout_main, homeFragment).commit();
-
+        fragmentManager.beginTransaction().replace(R.id.frame_layout_main, curFragment).commit();
     }
 
     @Override
@@ -89,17 +84,17 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_home) {
-            Fragment homeFragment = new HomeFragment();
+            curFragment = new HomeFragment();
             FragmentManager fragmentManager = getSupportFragmentManager();
-            fragmentManager.beginTransaction().replace(R.id.frame_layout_main, homeFragment).commit();
+            fragmentManager.beginTransaction().replace(R.id.frame_layout_main, curFragment).commit();
         } else if (id == R.id.nav_favourites) {
-            Fragment favFragment = new FavouritesFragment();
+            curFragment = new FavouritesFragment();
             FragmentManager fragmentManager = getSupportFragmentManager();
-            fragmentManager.beginTransaction().replace(R.id.frame_layout_main, favFragment).commit();
+            fragmentManager.beginTransaction().replace(R.id.frame_layout_main, curFragment).commit();
         } else if (id == R.id.nav_about) {
-            Fragment aboutFragment = new AboutFragment();
+            curFragment = new AboutFragment();
             FragmentManager fragmentManager = getSupportFragmentManager();
-            fragmentManager.beginTransaction().replace(R.id.frame_layout_main, aboutFragment).commit();
+            fragmentManager.beginTransaction().replace(R.id.frame_layout_main, curFragment).commit();
         }
         else if (id == R.id.nav_share) {
             onShareBtnClicked();
@@ -109,7 +104,6 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-
 
     public void onFragmentInteraction(Uri uri){
 

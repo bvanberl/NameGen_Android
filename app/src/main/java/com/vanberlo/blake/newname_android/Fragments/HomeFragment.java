@@ -1,20 +1,20 @@
 package com.vanberlo.blake.newname_android.Fragments;
 import com.vanberlo.blake.newname_android.Models.Name;
 import com.vanberlo.blake.newname_android.R;
-import com.vanberlo.blake.newname_android.RealmService;
-import io.realm.RealmResults;
+import com.vanberlo.blake.newname_android.Adapters.RecentsListAdapter;
 
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
+import android.opengl.GLException;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -23,7 +23,7 @@ import android.widget.ToggleButton;
 
 import com.vanberlo.blake.newname_android.Enumerations.Gender;
 import com.vanberlo.blake.newname_android.ML.Model;
-import com.vanberlo.blake.newname_android.R;
+import com.vanberlo.blake.newname_android.RealmService;
 
 import java.util.ArrayList;
 
@@ -44,9 +44,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private TextView newNameTextView;
     private ToggleButton genderToggleButton;
 
-    private ArrayList<String> arrayHistory;
+    private ArrayList<Name> arrayHistory;
     private ListView listViewHistory;
-    private ArrayAdapter<String> stringArrayAdapter;
+    private RecentsListAdapter stringArrayAdapter;
 
     private int latestSelectedIndex;
 
@@ -75,23 +75,13 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         listViewHistory = (ListView) rootView.findViewById(R.id.listViewHistory);
 
         //Something with the list
-        arrayHistory = new ArrayList<String>();
-        stringArrayAdapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_1, arrayHistory);
+        arrayHistory = new ArrayList<Name>();
+        stringArrayAdapter = new RecentsListAdapter(getApplicationContext(), arrayHistory);
         listViewHistory.setAdapter(stringArrayAdapter);
 
         // Set the buttons' on click listeners to this fragment
         Button buttonName = (Button) rootView.findViewById(R.id.buttonName);
-
         buttonName.setOnClickListener(this);
-
-        listViewHistory.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                latestSelectedIndex = position;
-                String selected =(listViewHistory.getItemAtPosition(position).toString());
-                newNameTextView.setText(selected);
-            }
-        });
 
         return rootView;
     }
@@ -113,16 +103,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
+
     public interface OnFragmentInteractionListener {
         void onFragmentInteraction(Uri uri);
     }
@@ -131,12 +112,16 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.buttonName:
-                onGenetateNameBtnClicked();
+                onGenerateNameBtnClicked();
+                break;
+            case R.id.listViewHistory:
+                int t = (Integer)v.getId();
+                Object tag = v.getTag();
                 break;
         }
     }
 
-    public void onGenetateNameBtnClicked(){
+    public void onGenerateNameBtnClicked(){
         boolean male = (genderToggleButton).isChecked();
         String generatedNameLower = "";
 
@@ -151,13 +136,20 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         }
 
         String generatedNameUpper = generatedNameLower.substring(0, 1).toUpperCase() + generatedNameLower.substring(1);
+        Name generatedName;
+        if(male) {
+            generatedName = new Name(generatedNameUpper, Gender.MALE);
+        }else{
+            generatedName = new Name(generatedNameUpper, Gender.FEMALE);
+        }
 
-        arrayHistory.add(0,generatedNameUpper);
+        arrayHistory.add(0,generatedName);
         stringArrayAdapter.notifyDataSetChanged();
 
         listViewHistory.setClickable(true);
         newNameTextView.setText(generatedNameUpper);
     }
+
 
     public void onFavouriteBtnClicked(){
         Context context = getApplicationContext();
@@ -190,4 +182,5 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         myIntent.putExtra(Intent.EXTRA_TEXT,shareBody);
         startActivity(Intent.createChooser(myIntent,"Share Using..."));
     }
+
 }

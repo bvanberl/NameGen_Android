@@ -3,17 +3,9 @@ import android.content.Context;
 
 import com.vanberlo.blake.newname_android.Constants;
 import com.vanberlo.blake.newname_android.Enumerations.Gender;
-import com.vanberlo.blake.newname_android.R;
-
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
-import java.util.HashMap;
+
 
 import Jama.Matrix;
 
@@ -63,7 +55,9 @@ public class Model {
             Matrix z = params.Wya.times(a).plus(params.by);
             Matrix y = MathUtils.softmax(z);
             idx = MathUtils.sampleFromPDF(y);
-            indices.add(idx);
+            if(idx != newlineCharacter) {
+                indices.add(idx);
+            }
 
             x = new Matrix(vocabSize, 1);
             x.set(idx, 0, 1);

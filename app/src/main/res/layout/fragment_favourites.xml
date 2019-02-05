@@ -16,13 +16,11 @@
         android:id="@+id/listViewFavourites"
         android:layout_width="337dp"
         android:layout_height="376dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:background="@android:color/darker_gray"
+        android:paddingBottom="5dp"
+        android:paddingTop="5dp"
+        android:background="@color/lightBeige"
         android:visibility="visible"
-        tools:background="@android:color/darker_gray"
-        tools:tag="History" />
+        tools:tag="Favourites" />
 
     <TextView
         android:id="@+id/textViewName"
@@ -30,10 +28,5 @@
         android:layout_height="wrap_content"
         android:textIsSelectable="true"/>
 
-    <Button
-        android:id="@+id/buttonRemove"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Remove" />
 
 </LinearLayout>
