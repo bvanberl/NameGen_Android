@@ -1,5 +1,6 @@
 package com.vanberlo.blake.newname_android.Activities;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
