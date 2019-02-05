@@ -79,7 +79,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
         //Something with the list
         arrayHistory = new ArrayList<Name>();
-        stringArrayAdapter = new RecentsListAdapter(getApplicationContext(), R.layout.recents_list_item_view, arrayHistory);
+        stringArrayAdapter = new RecentsListAdapter(getApplicationContext(), arrayHistory);
         listViewHistory.setAdapter(stringArrayAdapter);
 
         // Set the buttons' on click listeners to this fragment

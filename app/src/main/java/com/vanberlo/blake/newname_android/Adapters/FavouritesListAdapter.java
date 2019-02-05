@@ -2,16 +2,11 @@ package com.vanberlo.blake.newname_android.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,22 +16,26 @@ import com.vanberlo.blake.newname_android.R;
 import com.vanberlo.blake.newname_android.RealmService;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
-public class RecentsListAdapter extends ArrayAdapter<Name> {
+import io.realm.OrderedRealmCollection;
+import io.realm.RealmBaseAdapter;
+import io.realm.RealmCollection;
+
+
+public class FavouritesListAdapter extends RealmBaseAdapter {
 
     Context context;
-    List<Name> data;
+    OrderedRealmCollection<Name> favNames;
     int resourceLayout;
-    private static LayoutInflater inflater = null;
     RealmService realmService;
+    private static LayoutInflater inflater = null;
 
-    public RecentsListAdapter(Context context, ArrayList<Name> list) {
-        super(context, 0 , list);
+    public FavouritesListAdapter(Context context, OrderedRealmCollection<Name> list) {
+        super(list);
         this.context = context;
-        this.data = list;
-        this.resourceLayout = R.layout.recents_list_item_view;
+        this.favNames = list;
+        this.resourceLayout = R.layout.favourites_list_item_view;
         realmService = new RealmService();
         inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -44,7 +43,7 @@ public class RecentsListAdapter extends ArrayAdapter<Name> {
 
     @Override
     public int getCount() {
-        return data.size();
+        return favNames.size();
     }
 
     @Override
@@ -57,16 +56,16 @@ public class RecentsListAdapter extends ArrayAdapter<Name> {
         if (convertView == null)
             convertView = inflater.inflate(resourceLayout, parent, false);
         TextView nameText = (TextView) convertView.findViewById(R.id.name_text);
-        nameText.setText(data.get(position).getName());
-        ImageButton favBtn = (ImageButton)convertView.findViewById(R.id.favourite_list_button);
-        favBtn.setTag(position);
+        nameText.setText(favNames.get(position).getName());
+        ImageButton delBtn = (ImageButton)convertView.findViewById(R.id.delete_list_button);
+        delBtn.setTag(position);
         ImageButton shareBtn = (ImageButton)convertView.findViewById(R.id.share_list_button);
         shareBtn.setTag(position);
-        favBtn.setOnClickListener(new View.OnClickListener() {
+        delBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Integer pos = (Integer)v.getTag();
-                onFavouriteBtnClicked(pos);
+                onDeleteBtnClicked(pos);
             }
         });
         shareBtn.setOnClickListener(new View.OnClickListener(){
@@ -78,21 +77,10 @@ public class RecentsListAdapter extends ArrayAdapter<Name> {
         });
         return convertView;
     }
-
-
-    public void onFavouriteBtnClicked(int idx){
-        String selectedName = data.get(idx).getName();
-        Gender gender = data.get(idx).getGender();
-        realmService.insertName( selectedName, gender);
-
-        CharSequence text = selectedName + " saved to Favourites!";
-        int duration = Toast.LENGTH_SHORT;
-        Toast toast = Toast.makeText(context, text, duration);
-        toast.show();
-    }
+    
 
     public void onSendBtnClicked(int idx){
-        String selectedName = data.get(idx).getName();
+        String selectedName = favNames.get(idx).getName();
         Intent myIntent = new Intent(Intent.ACTION_SEND);
         myIntent.setType("text/plain");
         String shareBody = "I just created the name "+selectedName+" using ____________";
@@ -100,6 +88,19 @@ public class RecentsListAdapter extends ArrayAdapter<Name> {
         myIntent.putExtra(Intent.EXTRA_SUBJECT,shareSub);
         myIntent.putExtra(Intent.EXTRA_TEXT,shareBody);
         context.startActivity(Intent.createChooser(myIntent,"Share Using..."));
+
+    }
+
+    public void onDeleteBtnClicked(int idx){
+        Name selectedName = favNames.get(idx);
+        String nameText = selectedName.getName();
+        long id = selectedName.getId();
+        realmService.deleteNameWithId(id);
+
+        CharSequence text = nameText + " deleted from favourites.";
+        int duration = Toast.LENGTH_SHORT;
+        Toast toast = Toast.makeText(context, text, duration);
+        toast.show();
     }
 
 }
