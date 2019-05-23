@@ -2,6 +2,13 @@ package com.vanberlo.blake.newname_android.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
+import android.media.Image;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -66,7 +73,7 @@ public class RecentsListAdapter extends ArrayAdapter<Name> {
             @Override
             public void onClick(View v) {
                 Integer pos = (Integer)v.getTag();
-                onFavouriteBtnClicked(pos);
+                onFavouriteBtnClicked(pos, v);
             }
         });
         shareBtn.setOnClickListener(new View.OnClickListener(){
@@ -80,10 +87,14 @@ public class RecentsListAdapter extends ArrayAdapter<Name> {
     }
 
 
-    public void onFavouriteBtnClicked(int idx){
+    public void onFavouriteBtnClicked(int idx, View v){
         String selectedName = data.get(idx).getName();
         Gender gender = data.get(idx).getGender();
         realmService.insertName( selectedName, gender);
+
+        ImageButton favBtn = (ImageButton)v;
+        favBtn.setEnabled(false);
+        favBtn.setColorFilter(0xff8D30A6, PorterDuff.Mode.SRC_ATOP);
 
         CharSequence text = selectedName + " saved to Favourites!";
         int duration = Toast.LENGTH_SHORT;

@@ -121,6 +121,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             case R.id.listViewHistory:
                 int t = (Integer)v.getId();
                 Object tag = v.getTag();
+                listViewHistory.performClick();
                 break;
         }
     }

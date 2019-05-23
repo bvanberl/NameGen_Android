@@ -22,10 +22,15 @@
         android:id="@+id/listViewFavourites"
         android:layout_width="337dp"
         android:layout_height="fill_parent"
-        android:background="@color/darkGrey"
-        android:paddingBottom="5dp"
-        android:paddingTop="16dp"
+        android:background="@drawable/rounded_corner_border"
+        android:padding="5dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
         android:visibility="visible"
+        android:divider="@color/lightGrey"
+        android:dividerHeight="1px"
+        android:scrollbarFadeDuration="0"
+        android:scrollbarThumbVertical="@color/lightGrey"
         tools:tag="Favourites" />
 
     <TextView

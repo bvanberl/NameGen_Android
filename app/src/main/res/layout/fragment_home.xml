@@ -25,13 +25,17 @@
         android:id="@+id/listViewHistory"
         android:layout_width="337dp"
         android:layout_height="436dp"
-        android:background="@color/darkGrey"
-        android:paddingBottom="5dp"
-        android:paddingTop="5dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/rounded_corner_border"
+        android:padding="5dp"
+        android:divider="@color/lightGrey"
+        android:dividerHeight="1px"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/buttonName"
+        android:scrollbarFadeDuration="0"
+        android:scrollbarThumbVertical="@color/lightGrey"
         tools:tag="History">
 
     </ListView>

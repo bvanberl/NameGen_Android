@@ -8,7 +8,7 @@
     android:paddingRight="10dp"
     android:paddingBottom="5dp"
     android:paddingTop="5dp"
-    android:background="@color/lightGrey">
+    android:background="@color/darkGrey">
 
     <TextView
         android:id="@+id/name_text"
@@ -16,7 +16,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_gravity="center_vertical"
-        android:textColor="@color/darkGrey"
+        android:textColor="@color/lightGrey"
         android:textSize="25dp"/>
 
     <ImageButton
@@ -30,18 +30,18 @@
         android:background="@android:color/transparent"
         android:scaleType="fitCenter"
         android:src="@drawable/ic_favourite"
-        android:tint="@color/darkGrey"
-        android:focusableInTouchMode="true"/>
+        android:tint="@color/lightGrey"
+        android:focusable="false"/>
 
     <ImageButton
         android:id="@+id/share_list_button"
         android:layout_width="38dp"
         android:layout_height="38dp"
-        android:tint="@color/darkGrey"
-        android:background="@android:color/transparent"
+        android:tint="@color/lightGrey"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:src="@drawable/ic_menu_share"
-        android:focusableInTouchMode="true"/>
+        android:focusable="false"
+        android:background="@android:color/transparent"/>
 
 </RelativeLayout>
