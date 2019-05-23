@@ -4,35 +4,44 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="20dp"
+    android:padding="8dp"
+    android:background="@color/darkGrey"
     tools:context=".Fragments.AboutFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
         android:id="@+id/textViewTitle1"
+        android:background="@drawable/underline"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:textSize="20dp"
+        android:textSize="30dp"
+        android:textColor="@android:color/white"
         android:text="About the Creators" />
 
     <TextView
         android:id="@+id/textViewAbout1"
         android:layout_width="fill_parent"
         android:layout_height="200dp"
-        android:text="Blake and Bennett jargen"
+        android:text="Blake and Bennett stuff"
+        android:textColor="@android:color/white"
+        android:paddingTop="8dp"
         android:visibility="visible" />
     <TextView
         android:id="@+id/textViewTitle2"
+        android:background="@drawable/underline"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:textSize="20dp"
+        android:textSize="30dp"
+        android:textColor="@android:color/white"
         android:text="About the App" />
 
     <TextView
         android:id="@+id/textViewAbout2"
         android:layout_width="fill_parent"
         android:layout_height="200dp"
-        android:text="Machine learning jargen"
+        android:textColor="@android:color/white"
+        android:text="Machine learning stuff"
+        android:paddingTop="8dp"
         android:visibility="visible" />
 
 </LinearLayout>

@@ -6,10 +6,13 @@ import com.vanberlo.blake.newname_android.Adapters.RecentsListAdapter;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.net.Uri;
 import android.opengl.GLException;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.SpannableString;
+import android.text.style.UnderlineSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +20,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
@@ -34,7 +38,7 @@ import static io.realm.internal.SyncObjectServerFacade.getApplicationContext;
  * Activities that contain this fragment must implement the
  * {@link HomeFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link HomeFragment#newInstance} factory method to
+ * Use the {@link HomeFragment# newInstance} factory method to
  * create an instance of this fragment.
  */
 public class HomeFragment extends Fragment implements View.OnClickListener {
@@ -42,7 +46,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
     private Model model;
     private TextView newNameTextView;
-    private ToggleButton genderToggleButton;
+    private Switch genderToggleButton;
 
     private ArrayList<Name> arrayHistory;
     private ListView listViewHistory;
@@ -71,7 +75,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
         //Assigning view IDs. Wait for root view to be created first.
         newNameTextView = (TextView) rootView.findViewById(R.id.textViewName);
-        genderToggleButton = (ToggleButton) rootView.findViewById(R.id.toggleGender);
+        genderToggleButton = (Switch) rootView.findViewById(R.id.toggleGender);
         listViewHistory = (ListView) rootView.findViewById(R.id.listViewHistory);
 
         //Something with the list
@@ -122,30 +126,32 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     }
 
     public void onGenerateNameBtnClicked(){
+        //Check the toggle button for the gender selected
         boolean male = (genderToggleButton).isChecked();
-        String generatedNameLower = "";
 
+        //Generate a male or female name based on the previous variable
+        String generatedNameLower = "";
         if (male){
             generatedNameLower = model.predictName(Gender.MALE);
-            newNameTextView.setTextColor(Color.BLUE);
         }
         else{
             generatedNameLower = model.predictName(Gender.FEMALE);
-            newNameTextView.setTextColor(Color.RED);
-
         }
 
+        //Add an upper case letter as the first letter in the name
         String generatedNameUpper = generatedNameLower.substring(0, 1).toUpperCase() + generatedNameLower.substring(1);
         Name generatedName;
+
+        //Create a name object out of the name generated to be added to the listview
         if(male) {
             generatedName = new Name(generatedNameUpper, Gender.MALE);
         }else{
             generatedName = new Name(generatedNameUpper, Gender.FEMALE);
         }
 
+        //Update the list view, set the text of the main textview to the new name generated
         arrayHistory.add(0,generatedName);
         stringArrayAdapter.notifyDataSetChanged();
-
         listViewHistory.setClickable(true);
         newNameTextView.setText(generatedNameUpper);
     }

@@ -5,71 +5,83 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/grey"
+    android:background="@color/darkGrey"
     android:gravity="center_horizontal">
 
     <TextView
         android:id="@+id/textViewName"
-        android:layout_width="280dp"
-        android:layout_height="47dp"
-        android:layout_marginBottom="16dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:background="@color/colorPrimary"
+        android:layout_width="fill_parent"
+        android:layout_height="71dp"
+        android:background="@drawable/underline"
         android:textAlignment="center"
+        android:gravity="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-        app:layout_constraintBottom_toTopOf="@+id/toggleGender"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:elevation="4dp"
-        tools:textSize="30sp" />
-
-    <Button
-        android:id="@+id/buttonName"
-        android:layout_width="204dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="0dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="0dp"
-        android:text="Discover a Name"
-        app:layout_constraintBottom_toTopOf="@+id/listViewHistory"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toggleGender"
-        android:onClick="onClick"/>
-
-    <ToggleButton
-        android:id="@+id/toggleGender"
-        android:layout_width="111dp"
-        android:layout_height="47dp"
-        android:layout_marginBottom="16dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:text="ToggleButton"
-        android:textOff="Female"
-        android:textOn="Male"
-        app:layout_constraintBottom_toTopOf="@+id/buttonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewName" />
+        android:textColor="@color/white"
+        android:hint="@string/home_hint_message"
+        android:textColorHint="@color/white"
+        android:textSize="36dp" />
 
     <ListView
         android:id="@+id/listViewHistory"
         android:layout_width="337dp"
-        android:layout_height="255dp"
+        android:layout_height="436dp"
+        android:background="@color/darkGrey"
         android:paddingBottom="5dp"
         android:paddingTop="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/buttonName"
-        android:background="@color/lightBeige"
         tools:tag="History">
 
     </ListView>
+
+    <LinearLayout
+        android:layout_width="337dp"
+        android:layout_height="match_parent"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="40dp"
+        android:layout_gravity="left"
+        android:orientation="horizontal">
+
+        <Switch
+            android:id="@+id/toggleGender"
+            android:layout_width="111dp"
+            android:layout_height="47dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="0dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="0dp"
+            android:layout_weight="1"
+            android:gravity="center_vertical|center_horizontal"
+            android:maxHeight="28dp"
+            android:showText="true"
+            android:switchMinWidth="54dp"
+            android:scaleX="2"
+            android:scaleY="2"
+            android:thumbTint="@color/lightGrey"
+            android:switchTextAppearance="@style/SwitchTextAppearance"
+            android:textOff="@string/switch_female"
+            android:textOn="@string/switch_male"
+            android:visibility="visible" />
+
+        <Button
+            android:id="@+id/buttonName"
+            android:layout_width="260dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="0dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="0dp"
+            android:layout_weight="1"
+            android:onClick="onClick"
+            android:text="@string/button_name_text"
+            app:layout_constraintBottom_toTopOf="@+id/listViewHistory"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toggleGender" />
+
+    </LinearLayout>
 
 </LinearLayout>
