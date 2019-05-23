@@ -6,11 +6,11 @@
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
-    <string name="facebook_app_id">The_Namer</string>
+    <string name="facebook_app_id">NameGen</string>
     <string name="switch_male">M</string>
     <string name="switch_female">F</string>
     <string name="button_name_text">Generate</string>
-    <string name="home_hint_message">Click "Generate" to Start!</string>
+    <string name="home_hint_message">Click \"Generate\" to start!</string>
 
 
     <!-- TODO: Remove or change this placeholder text -->

@@ -113,8 +113,8 @@ public class MainActivity extends AppCompatActivity
     public void onShareBtnClicked(){
         Intent myIntent = new Intent(Intent.ACTION_SEND);
         myIntent.setType("text/plain");
-        String shareSub = "Check out ___________ on the Play Store!";
-        String shareBody = "https://play.google.com/store/apps/details?id=newname_android";
+        String shareSub = "Check out NameGen on the Play Store!";
+        String shareBody = "https://play.google.com/store/apps/details?id=NameGen";
         myIntent.putExtra(Intent.EXTRA_SUBJECT,shareSub);
         myIntent.putExtra(Intent.EXTRA_TEXT,shareBody);
         startActivity(Intent.createChooser(myIntent,"Share Using..."));

@@ -18,7 +18,7 @@
         android:layout_height="109dp"
         android:contentDescription="@string/nav_header_desc"
         android:gravity="bottom"
-        app:srcCompat="@mipmap/ic_launcher_round" />
+        app:srcCompat="@drawable/icon_drawer" />
 
     <TextView
         android:id="@+id/titleTextView2"
@@ -30,7 +30,7 @@
         android:fontFamily="@font/my_font"
         android:gravity="bottom"
         android:lineSpacingMultiplier="0.7"
-        android:text="Name\nCub"
+        android:text="Name\nGen"
         android:textAlignment="gravity"
         android:textAppearance="@style/TextAppearance.AppCompat"
         android:textColor="@color/purple"
