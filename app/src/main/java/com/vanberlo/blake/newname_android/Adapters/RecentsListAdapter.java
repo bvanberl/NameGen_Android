@@ -2,8 +2,13 @@ package com.vanberlo.blake.newname_android.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.media.Image;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -89,7 +94,7 @@ public class RecentsListAdapter extends ArrayAdapter<Name> {
 
         ImageButton favBtn = (ImageButton)v;
         favBtn.setEnabled(false);
-        favBtn.setImageResource(R.drawable.icon_favourites_purple);
+        favBtn.setColorFilter(0xff8D30A6, PorterDuff.Mode.SRC_ATOP);
 
         CharSequence text = selectedName + " saved to Favourites!";
         int duration = Toast.LENGTH_SHORT;
