@@ -3,6 +3,7 @@ package com.vanberlo.blake.newname_android;
 import com.vanberlo.blake.newname_android.Enumerations.Gender;
 import com.vanberlo.blake.newname_android.Models.Name;
 
+import io.realm.Case;
 import io.realm.Realm;
 import io.realm.RealmResults;
 
@@ -60,6 +61,26 @@ public class RealmService {
      */
     public RealmResults<Name> getAllNames(){
         return realm.where(Name.class).findAll();
+    }
+
+
+    public RealmResults<Name> getNamesWithText(String searchTerm){
+        if(searchTerm.length() > 0) {
+            //searchTerm = searchTerm.substring(0, 1).toUpperCase() + searchTerm.substring(1); // Ensure first character is uppercase
+            return realm.where(Name.class).contains("name", searchTerm, Case.INSENSITIVE).findAll();
+        }
+        else {
+            return getAllNames();
+        }
+    }
+
+    public RealmResults<Name> getNamesWithTextAndGender(String searchTerm, int gender){
+        if(searchTerm.length() > 0){
+            return realm.where(Name.class).equalTo("gender", gender).findAll();
+        }
+        else {
+            return realm.where(Name.class).equalTo("gender", gender).contains("name", searchTerm, Case.INSENSITIVE).findAll();
+        }
     }
 
 

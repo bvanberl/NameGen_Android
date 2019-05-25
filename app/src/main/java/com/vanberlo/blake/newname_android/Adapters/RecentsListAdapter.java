@@ -2,9 +2,11 @@ package com.vanberlo.blake.newname_android.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.DataSetObserver;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.ColorFilter;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.media.Image;
@@ -47,6 +49,13 @@ public class RecentsListAdapter extends ArrayAdapter<Name> {
         realmService = new RealmService();
         inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        this.registerDataSetObserver(new DataSetObserver() {
+            @Override
+            public void onChanged() {
+                super.onChanged();
+
+            }
+        });
     }
 
     @Override
@@ -106,11 +115,11 @@ public class RecentsListAdapter extends ArrayAdapter<Name> {
         String selectedName = data.get(idx).getName();
         Intent myIntent = new Intent(Intent.ACTION_SEND);
         myIntent.setType("text/plain");
-        String shareBody = "I just created the name "+selectedName+" using ____________";
+        String shareBody = "I just created the name "+selectedName+" using NameGen!";
         String shareSub = "Check out my new name!";
         myIntent.putExtra(Intent.EXTRA_SUBJECT,shareSub);
         myIntent.putExtra(Intent.EXTRA_TEXT,shareBody);
-        context.startActivity(Intent.createChooser(myIntent,"Share Using..."));
+        context.startActivity(Intent.createChooser(myIntent,"Share using ..."));
     }
 
 }

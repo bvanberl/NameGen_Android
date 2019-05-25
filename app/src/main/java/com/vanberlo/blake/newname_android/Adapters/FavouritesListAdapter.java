@@ -25,10 +25,10 @@ import io.realm.RealmCollection;
 
 public class FavouritesListAdapter extends RealmBaseAdapter {
 
-    Context context;
-    OrderedRealmCollection<Name> favNames;
-    int resourceLayout;
-    RealmService realmService;
+    private Context context;
+    private OrderedRealmCollection<Name> favNames;
+    private int resourceLayout;
+    private RealmService realmService;
     private static LayoutInflater inflater = null;
 
     public FavouritesListAdapter(Context context, OrderedRealmCollection<Name> list) {
@@ -77,13 +77,16 @@ public class FavouritesListAdapter extends RealmBaseAdapter {
         });
         return convertView;
     }
-    
+
+    public void setFavNames(OrderedRealmCollection<Name> favNames) {
+        this.favNames = favNames;
+    }
 
     public void onSendBtnClicked(int idx){
         String selectedName = favNames.get(idx).getName();
         Intent myIntent = new Intent(Intent.ACTION_SEND);
         myIntent.setType("text/plain");
-        String shareBody = "I just created the name "+selectedName+" using ____________";
+        String shareBody = "I just created the name "+selectedName+" using NameGen";
         String shareSub = "Check out my new name!";
         myIntent.putExtra(Intent.EXTRA_SUBJECT,shareSub);
         myIntent.putExtra(Intent.EXTRA_TEXT,shareBody);
