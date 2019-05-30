@@ -6,7 +6,9 @@ import com.vanberlo.blake.newname_android.Adapters.RecentsListAdapter;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.ColorFilter;
 import android.graphics.Paint;
+import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.opengl.GLException;
 import android.os.Bundle;
@@ -19,6 +21,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -82,6 +85,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         arrayHistory = new ArrayList<Name>();
         stringArrayAdapter = new RecentsListAdapter(getApplicationContext(), arrayHistory);
         listViewHistory.setAdapter(stringArrayAdapter);
+
 
         // Set the buttons' on click listeners to this fragment
         Button buttonName = (Button) rootView.findViewById(R.id.buttonName);
@@ -155,39 +159,20 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         stringArrayAdapter.notifyDataSetChanged();
         listViewHistory.setClickable(true);
         newNameTextView.setText(generatedNameUpper);
+        /*
+        if(listViewHistory.getChildCount() >= 1) {
+            for(int i = 0; i < listViewHistory.getChildCount() - 1; i++) {
+                ImageButton btn0 = (ImageButton) listViewHistory.getChildAt(i).findViewById(R.id.favourite_list_button);
+                ImageButton btn1 = (ImageButton) listViewHistory.getChildAt(i + 1).findViewById(R.id.favourite_list_button);
+                if(btn0.getColorFilter() != null) {
+                    btn0.clearColorFilter();
+                    ColorFilter cf = btn0.getColorFilter();
+                    btn1.setColorFilter(0xff8D30A6, PorterDuff.Mode.SRC_ATOP);
+                }
+            }
+        }*/
     }
 
 
-    public void onFavouriteBtnClicked(){
-        Context context = getApplicationContext();
-        String selectedName = listViewHistory.getItemAtPosition(latestSelectedIndex).toString();
-        CharSequence text = selectedName + "saved to Favourites!";
-        int duration = Toast.LENGTH_SHORT;
-        Toast toast = Toast.makeText(context, text, duration);
-        toast.show();
-
-        boolean male = (genderToggleButton).isChecked();
-
-        RealmService realmService;
-        realmService = new RealmService();
-        if(male){
-            realmService.insertName( selectedName, Gender.MALE);
-        }
-        else{
-            realmService.insertName( selectedName, Gender.FEMALE);
-        }
-    }
-
-    public void onSendBtnClicked(){
-        String selectedName = listViewHistory.getItemAtPosition(latestSelectedIndex).toString();
-
-        Intent myIntent = new Intent(Intent.ACTION_SEND);
-        myIntent.setType("text/plain");
-        String shareBody = "I just created the name "+selectedName+" using ____________!";
-        String shareSub = "Check out my new name!";
-        myIntent.putExtra(Intent.EXTRA_SUBJECT,shareSub);
-        myIntent.putExtra(Intent.EXTRA_TEXT,shareBody);
-        startActivity(Intent.createChooser(myIntent,"Share Using..."));
-    }
 
 }

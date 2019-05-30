@@ -42,7 +42,7 @@ public class Model {
         buffReader = new BufferedReader(inputStreamReader);
         try {
             while (( line = buffReader.readLine()) != null) {
-                existingMaleNames.add(line);
+                existingFemaleNames.add(line);
             }
         } catch (IOException e) {}
     }
@@ -61,6 +61,7 @@ public class Model {
         boolean inNameList = true;
         int numTries = 0;
         do {
+            name = "";
             List<Integer> indices = new ArrayList<Integer>();
             int vocabSize = Constants.CHAR_TO_IX.size();
             int n_a = params.Waa.getColumnDimension();
@@ -111,7 +112,7 @@ public class Model {
                 inNameList = existingMaleNames.contains(name);
             }
             ++numTries;
-        } while(inNameList);
+        } while(inNameList && numTries <= 50);
 
         return name;
     }
