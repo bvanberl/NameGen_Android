@@ -20,7 +20,7 @@
 
     <RelativeLayout
         android:layout_width="337dp"
-        android:layout_height="50dp"
+        android:layout_height="55dp"
         android:orientation="horizontal"
         android:layout_marginTop="10dp"
         android:layout_marginRight="10dp"
