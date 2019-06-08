@@ -159,18 +159,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         stringArrayAdapter.notifyDataSetChanged();
         listViewHistory.setClickable(true);
         newNameTextView.setText(generatedNameUpper);
-        /*
-        if(listViewHistory.getChildCount() >= 1) {
-            for(int i = 0; i < listViewHistory.getChildCount() - 1; i++) {
-                ImageButton btn0 = (ImageButton) listViewHistory.getChildAt(i).findViewById(R.id.favourite_list_button);
-                ImageButton btn1 = (ImageButton) listViewHistory.getChildAt(i + 1).findViewById(R.id.favourite_list_button);
-                if(btn0.getColorFilter() != null) {
-                    btn0.clearColorFilter();
-                    ColorFilter cf = btn0.getColorFilter();
-                    btn1.setColorFilter(0xff8D30A6, PorterDuff.Mode.SRC_ATOP);
-                }
-            }
-        }*/
+
     }
 
 

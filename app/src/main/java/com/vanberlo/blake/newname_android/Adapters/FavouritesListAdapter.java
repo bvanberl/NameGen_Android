@@ -86,11 +86,11 @@ public class FavouritesListAdapter extends RealmBaseAdapter {
         String selectedName = favNames.get(idx).getName();
         Intent myIntent = new Intent(Intent.ACTION_SEND);
         myIntent.setType("text/plain");
-        String shareBody = "I just created the name "+selectedName+" using NameGen";
+        String shareBody = "I just created the name "+ selectedName +" using NameGen!";
         String shareSub = "Check out my new name!";
         myIntent.putExtra(Intent.EXTRA_SUBJECT,shareSub);
         myIntent.putExtra(Intent.EXTRA_TEXT,shareBody);
-        context.startActivity(Intent.createChooser(myIntent,"Share Using..."));
+        context.startActivity(Intent.createChooser(myIntent,"Send using ..."));
 
     }
 

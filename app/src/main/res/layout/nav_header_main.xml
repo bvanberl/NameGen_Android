@@ -18,7 +18,7 @@
         android:layout_height="109dp"
         android:contentDescription="@string/nav_header_desc"
         android:gravity="bottom"
-        app:srcCompat="@drawable/icon_drawer" />
+        app:srcCompat="@drawable/icon_drawer_no_background" />
 
     <TextView
         android:id="@+id/titleTextView2"
@@ -26,8 +26,8 @@
         android:layout_width="match_parent"
         android:layout_height="221dp"
         android:layout_marginBottom="30dp"
+        android:paddingBottom="20dp"
         android:layout_gravity="center|right"
-        android:fontFamily="@font/my_font"
         android:gravity="bottom"
         android:lineSpacingMultiplier="0.7"
         android:text="Name\nGen"

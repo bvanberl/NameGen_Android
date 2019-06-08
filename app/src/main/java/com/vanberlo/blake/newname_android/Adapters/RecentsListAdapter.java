@@ -2,11 +2,14 @@ package com.vanberlo.blake.newname_android.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ResolveInfo;
 import android.database.DataSetObserver;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.ColorFilter;
+import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.media.Image;
@@ -127,13 +130,15 @@ public class RecentsListAdapter extends ArrayAdapter<Name> {
 
     public void onSendBtnClicked(int idx){
         String selectedName = data.get(idx).getName();
-        Intent myIntent = new Intent(Intent.ACTION_SEND);
-        myIntent.setType("text/plain");
-        String shareBody = "I just created the name "+selectedName+" using NameGen!";
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("text/plain");
+        String shareBody = "I just created the name "+ selectedName +" using NameGen!";
         String shareSub = "Check out my new name!";
-        myIntent.putExtra(Intent.EXTRA_SUBJECT,shareSub);
-        myIntent.putExtra(Intent.EXTRA_TEXT,shareBody);
-        context.startActivity(Intent.createChooser(myIntent,"Share using ..."));
+        intent.putExtra(Intent.EXTRA_SUBJECT, shareSub);
+        intent.putExtra(Intent.EXTRA_TEXT, shareBody);
+
+        context.startActivity(Intent.createChooser(intent,"Send using ..."));
     }
+
 
 }

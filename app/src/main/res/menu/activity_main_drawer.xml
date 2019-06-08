@@ -4,10 +4,9 @@
     tools:showIn="navigation_view">
 
     <group android:checkableBehavior="single">
-
         <item
             android:id="@+id/nav_home"
-            android:icon="@drawable/icon_name"
+            android:icon="@drawable/icon_menu_generate"
             android:title="Generate Names" />
         <item
             android:id="@+id/nav_favourites"

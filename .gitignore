@@ -66,3 +66,6 @@ fastlane/readme.md
 
 # macOS folder attributes
 .DS_Store
+
+# App credentials (e.g. social media app IDs)
+app/src/main/res/values/credentials.xml

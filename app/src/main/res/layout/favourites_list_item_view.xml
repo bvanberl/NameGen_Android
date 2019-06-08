@@ -16,6 +16,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_gravity="center_vertical"
+        android:fontFamily="@font/montserrat"
         android:textColor="@color/lightGrey"
         android:textSize="25dp"/>
 
@@ -41,7 +42,7 @@
         android:background="@android:color/transparent"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        android:src="@drawable/ic_menu_share"
+        android:src="@drawable/ic_menu_send"
         android:focusable="false"/>
 
 </RelativeLayout>

@@ -17,7 +17,7 @@
         android:gravity="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Headline"
         android:textColor="@color/white"
-        android:hint="@string/home_hint_message"
+        android:hint="@string/generate_name_hint"
         android:textColorHint="@color/white"
         android:textSize="36dp" />
 
@@ -81,7 +81,9 @@
             android:layout_marginTop="0dp"
             android:layout_weight="1"
             android:onClick="onClick"
-            android:text="@string/button_name_text"
+            android:text="@string/generate_button_text"
+            android:fontFamily="@font/montserrat_bold"
+            android:textSize="17dp"
             app:layout_constraintBottom_toTopOf="@+id/listViewHistory"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

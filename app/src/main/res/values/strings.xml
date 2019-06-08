@@ -6,12 +6,9 @@
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
-    <string name="facebook_app_id">NameGen</string>
     <string name="switch_male">M</string>
     <string name="switch_female">F</string>
-    <string name="button_name_text">Generate</string>
-    <string name="home_hint_message">Click \"Generate\" to start!</string>
+    <string name="generate_button_text">Generate</string>
     <string name="about_message">NameGen is an app that was created to help prospective parents explore interesting and unique first names. You can continuously generate first names with the press of a button. If you like a name that you generated, you can save it for later or share it with family and friends.\n\nThis app creates new names using a branch of artificial intelligence called machine learning. A special type of machine learning system, known as a recurrent neural network (RNN) works to generate the names one letter at a time. The RNN examined all names registered for social security in the United States of America between the years of 1880 and 2012. It learned patterns in the ordering of letter sequences in these names. Using the patterns that it learned and a bit of randomness, the RNN is able to generate new names. While we cannot guarantee that each name you generate will be the first in the world, we are fairly confident that the vast majority of the names generated will be new to most people. You may generate some names that sound great, some that sound silly (no algorithm is perfect), or even familiar names that are spelled differently!\n\nWe hope that NameGen brings you a fun way to explore first names. If NameGen is producing useful results for you or if you have any ideas for improvement, please reach out to the NameGen creators at namegendevelopers@gmail.com.</string>
-
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="generate_name_hint">"Press Generate!</string>
 </resources>
