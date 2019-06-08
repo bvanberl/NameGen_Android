@@ -76,10 +76,11 @@ public class RealmService {
 
     public RealmResults<Name> getNamesWithTextAndGender(String searchTerm, int gender){
         if(searchTerm.length() > 0){
-            return realm.where(Name.class).equalTo("gender", gender).findAll().sort("name");
+            return realm.where(Name.class).equalTo("gender", gender).contains("name", searchTerm, Case.INSENSITIVE).findAll().sort("name");
+
         }
         else {
-            return realm.where(Name.class).equalTo("gender", gender).contains("name", searchTerm, Case.INSENSITIVE).findAll().sort("name");
+            return realm.where(Name.class).equalTo("gender", gender).findAll().sort("name");
         }
     }
 

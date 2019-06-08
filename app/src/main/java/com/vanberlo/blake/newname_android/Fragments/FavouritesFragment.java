@@ -92,9 +92,7 @@ public class FavouritesFragment extends Fragment implements View.OnClickListener
         searchEditText = (EditText)rootView.findViewById(R.id.searchEditText);
         searchEditText.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -102,9 +100,7 @@ public class FavouritesFragment extends Fragment implements View.OnClickListener
             }
 
             @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
+            public void afterTextChanged(Editable editable) {}
         });
 
         return rootView;
