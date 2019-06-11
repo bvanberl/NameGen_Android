@@ -14,7 +14,7 @@ gen/
 out/
 
 # Android bundles
-app/release/
+*.aab
 
 # Gradle files
 .gradle/
