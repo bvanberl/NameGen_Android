@@ -25,6 +25,9 @@ public class MainActivity extends AppCompatActivity
 
     private Fragment curFragment;
 
+    /**
+     * Set up the UI for the activity
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,6 +81,9 @@ public class MainActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * Set up links for the side drawer buttons to update the fragment
+     */
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -110,11 +116,14 @@ public class MainActivity extends AppCompatActivity
 
     }
 
+    /**
+     * Starts a send intent with a link to NameGen on the Google Play store as the content
+     */
     public void onShareBtnClicked(){
         Intent myIntent = new Intent(Intent.ACTION_SEND);
         myIntent.setType("text/plain");
-        String shareBody = "Check out NameGen on the Google Play Store!";
-        String shareSub = "URL coming soon!";
+        String shareBody = "https://play.google.com/store/apps/details?id=com.vanberlo.blake.newname_android"; // Link to NameGen on the Play Store
+        String shareSub = "Check out NameGen on the Google Play store!";
         myIntent.putExtra(Intent.EXTRA_SUBJECT,shareSub);
         myIntent.putExtra(Intent.EXTRA_TEXT,shareBody);
         startActivity(Intent.createChooser(myIntent,"Share using..."));

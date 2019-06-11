@@ -4,21 +4,15 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.vanberlo.blake.newname_android.Adapters.FavouritesListAdapter;
 import com.vanberlo.blake.newname_android.Enumerations.Gender;
@@ -33,19 +27,13 @@ import io.realm.RealmResults;
 
 import static io.realm.internal.SyncObjectServerFacade.getApplicationContext;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link FavouritesFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- */
+
 public class FavouritesFragment extends Fragment implements View.OnClickListener {
 
     private OnFragmentInteractionListener mListener;
     private RealmService realmService;
     private RealmResults<Name> savedNames;
 
-    private ArrayList<Name> favNames;
     private ListView listViewFavourites;
     private FavouritesListAdapter favouritesListAdapter;
 
@@ -61,19 +49,20 @@ public class FavouritesFragment extends Fragment implements View.OnClickListener
     }
 
 
+    /**
+     * Set up refenences to UI elements
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+
         View rootView = inflater.inflate(R.layout.fragment_favourites, container, false);
 
         listViewFavourites = (ListView) rootView.findViewById(R.id.listViewFavourites);
-
         favouritesListAdapter = new FavouritesListAdapter(getApplicationContext(), savedNames);
         listViewFavourites.setAdapter(favouritesListAdapter);
 
         textViewName = (TextView) rootView.findViewById(R.id.textViewName);
-
         maleCheckbox = (CheckBox)rootView.findViewById(R.id.maleCheckbox);
         maleCheckbox.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,8 +77,9 @@ public class FavouritesFragment extends Fragment implements View.OnClickListener
                 onCheckboxChecked(view);
             }
         });
-
         searchEditText = (EditText)rootView.findViewById(R.id.searchEditText);
+
+        // Add an event handler for when the text in the search box is updated
         searchEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
@@ -133,7 +123,13 @@ public class FavouritesFragment extends Fragment implements View.OnClickListener
         void onFragmentInteraction(Uri uri);
     }
 
+    /**
+     * An event handler that is triggered when a checkbox is checked. Ensures that at least 1 checkbox is checked.
+     * Triggers a database query reflecting the updated UI state
+     * @param v - the checkox object that was checked
+     */
     public void onCheckboxChecked(View v) {
+        // Ensure that at least 1 checkbox is checked
         if (!maleCheckbox.isChecked() && !femaleCheckbox.isChecked()) {
             if (v.getId() == R.id.maleCheckbox) {
                 femaleCheckbox.setChecked(true);
@@ -141,9 +137,12 @@ public class FavouritesFragment extends Fragment implements View.OnClickListener
                 maleCheckbox.setChecked(true);
             }
         }
-        applyFilters();
+        applyFilters(); // Update the filtering results
     }
 
+    /**
+     * Applies the filters set by the user in the Facourites fragment and queries the database. The adapter's state is then updated.
+     */
     public void applyFilters(){
         if(maleCheckbox.isChecked() && !femaleCheckbox.isChecked()){
             favouritesListAdapter.setFavNames(realmService.getNamesWithTextAndGender(searchEditText.getText().toString(), Gender.MALE.ordinal()));

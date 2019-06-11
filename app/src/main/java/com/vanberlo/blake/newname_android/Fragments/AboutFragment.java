@@ -11,19 +11,11 @@ import android.view.ViewGroup;
 import com.vanberlo.blake.newname_android.R;
 
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link AboutFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- */
 public class AboutFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public AboutFragment() {
-        // Required empty public constructor
-    }
+    public AboutFragment() {}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

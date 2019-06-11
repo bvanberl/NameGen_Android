@@ -3,10 +3,15 @@ package com.vanberlo.blake.newname_android;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * A class containing various constants in the app
+ */
 public class Constants {
 
-    public static final int MAX_NAME_LENGTH = 20;
+    public static final int MAX_NAME_LENGTH = 20; // Maximum allowable name length
+    public static final int MAX_NUM_TRIES = 50; // Maximum allowable tries to generate a name that isn't in the training set
 
+    // A mapping of integers to characters
     public static final Map<Integer, Character> IX_TO_CHAR = new HashMap<Integer, Character>(){
         {
             put(0, '\n');
@@ -38,6 +43,7 @@ public class Constants {
             put(26, 'z');
         }};
 
+    // A mapping of characters to integers
     public static final Map<Character, Integer> CHAR_TO_IX = new HashMap<Character, Integer>(){
         {
             put('\n', 0);

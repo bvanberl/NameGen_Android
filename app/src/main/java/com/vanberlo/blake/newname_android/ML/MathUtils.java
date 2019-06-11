@@ -10,10 +10,13 @@ import java.util.List;
 
 import Jama.Matrix;
 
+/**
+ * Contains helper functions for various mathematical operations used in RNN name prediction
+ */
 public class MathUtils {
 
     /**
-     *
+     * Implements the softmax function for a column vector
      * @param M: A column vector
      * @return Softmax of M
      */
@@ -39,9 +42,9 @@ public class MathUtils {
     }
 
     /**
-     *
-     * @param Y
-     * @return
+     * Randomly samples from a probability distribution function
+     * @param Y - the probability distribution function
+     * @return - the value of the sample drawn from the distribution
      */
     public static Integer sampleFromPDF(Matrix Y){
         List<Pair<Integer, Double>> P = new ArrayList<Pair<Integer, Double>>();

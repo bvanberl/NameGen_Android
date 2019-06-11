@@ -2,29 +2,13 @@ package com.vanberlo.blake.newname_android.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.ResolveInfo;
-import android.database.DataSetObserver;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.ColorFilter;
-import android.graphics.Paint;
 import android.graphics.PorterDuff;
-import android.graphics.drawable.Drawable;
-import android.media.Image;
-import android.support.v4.graphics.drawable.DrawableCompat;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,18 +18,22 @@ import com.vanberlo.blake.newname_android.R;
 import com.vanberlo.blake.newname_android.RealmService;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class RecentsListAdapter extends ArrayAdapter<Name> {
 
     Context context;
     List<Name> data;
-    List<Integer> favouriteIndices;
+    List<Integer> favouriteIndices; // Indices of names selected by the user to favourite
     int resourceLayout;
     private static LayoutInflater inflater = null;
     RealmService realmService;
 
+    /**
+     * Constructor for the adapter
+     * @param context - the current app context
+     * @param list - the list of database results constituting the adapter's data
+     */
     public RecentsListAdapter(Context context, ArrayList<Name> list) {
         super(context, 0 , list);
         this.context = context;
@@ -67,6 +55,9 @@ public class RecentsListAdapter extends ArrayAdapter<Name> {
         return position;
     }
 
+    /**
+     * Set up UI for an individual item in the list
+     */
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         if (convertView == null)
@@ -78,6 +69,7 @@ public class RecentsListAdapter extends ArrayAdapter<Name> {
         ImageButton shareBtn = (ImageButton)convertView.findViewById(R.id.share_list_button);
         shareBtn.setTag(position);
 
+        // Set up an event handler for tapping the favourite button
         favBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -85,20 +77,25 @@ public class RecentsListAdapter extends ArrayAdapter<Name> {
                 onFavouriteBtnClicked(pos, v);
             }
         });
+
+        // If this is a newly added item to the list, increment all indices of items selected as favourites
         if(position == 0) {
             for (int i = 0; i < favouriteIndices.size(); i++) {
                 favouriteIndices.set(i, favouriteIndices.get(i) + 1);
             }
         }
+
+        // Set the colour of the favourite button if it was previously selected as a favourite name; otherwise, unset the colour
         if(favouriteIndices.contains(position)){
             favBtn.setEnabled(false); // Disable the favourite button
             favBtn.setColorFilter(0xff8D30A6, PorterDuff.Mode.SRC_ATOP); // Change the colour of the favourite button
         }
         else{
-            favBtn.setEnabled(true); // Enable the favourite button
+            favBtn.setEnabled(true); // Enable the Favourite button
             favBtn.clearColorFilter(); // Change the colour of the favourite button
         }
 
+        // Set up an event handler for the Send button
         shareBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
@@ -110,17 +107,23 @@ public class RecentsListAdapter extends ArrayAdapter<Name> {
     }
 
 
-
+    /**
+     * Adds the name at the list index selected by the user to the favourites database
+     * @param idx - the index of the selected name in the list
+     * @param v - a reference to the view that was clicked
+     */
     public void onFavouriteBtnClicked(int idx, View v){
         String selectedName = data.get(idx).getName();
         Gender gender = data.get(idx).getGender();
-        realmService.insertName(selectedName, gender);
+        realmService.insertName(selectedName, gender); // Insert the name into the Realm database
 
+        // Change the colour of the button at the selected name's index
         ImageButton favBtn = (ImageButton)v;
         favBtn.setEnabled(false); // Disable the favourite button
         favBtn.setColorFilter(0xff8D30A6, PorterDuff.Mode.SRC_ATOP); // Change the colour of the favourite button
         favouriteIndices.add(idx);
 
+        // Display a toast to the user, confirming that the name was saved to Favourites
         CharSequence text = selectedName + " saved to Favourites!";
         int duration = Toast.LENGTH_SHORT;
         Toast toast = Toast.makeText(context, text, duration);
@@ -128,6 +131,10 @@ public class RecentsListAdapter extends ArrayAdapter<Name> {
         toast.show();
     }
 
+    /**
+     * Create a send intent for the user to send the name at the selected index via an external app
+     * @param idx - the index of the selected name in the list
+     */
     public void onSendBtnClicked(int idx){
         String selectedName = data.get(idx).getName();
         Intent intent = new Intent(Intent.ACTION_SEND);

@@ -26,11 +26,16 @@ import io.realm.RealmCollection;
 public class FavouritesListAdapter extends RealmBaseAdapter {
 
     private Context context;
-    private OrderedRealmCollection<Name> favNames;
+    private OrderedRealmCollection<Name> favNames; // the names saved in the database
     private int resourceLayout;
     private RealmService realmService;
     private static LayoutInflater inflater = null;
 
+    /**
+     * A constructor for this adapter
+     * @param context - the application's current context
+     * @param list - the list of names from the database
+     */
     public FavouritesListAdapter(Context context, OrderedRealmCollection<Name> list) {
         super(list);
         this.context = context;
@@ -51,6 +56,9 @@ public class FavouritesListAdapter extends RealmBaseAdapter {
         return position;
     }
 
+    /**
+     * Set up UI for an individual item in the list
+     */
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         if (convertView == null)
@@ -61,18 +69,22 @@ public class FavouritesListAdapter extends RealmBaseAdapter {
         delBtn.setTag(position);
         ImageButton shareBtn = (ImageButton)convertView.findViewById(R.id.share_list_button);
         shareBtn.setTag(position);
+
+        // Add an event handler for the delete button associated with this item in the list
         delBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Integer pos = (Integer)v.getTag();
-                onDeleteBtnClicked(pos);
+                onDeleteBtnClicked(pos); // Delete this name
             }
         });
+
+        // Add an event handler for the share button associated with this item in the list
         shareBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
                 Integer pos = (Integer)v.getTag();
-                onSendBtnClicked(pos);
+                onSendBtnClicked(pos); // Share this name
             }
         });
         return convertView;
@@ -82,6 +94,10 @@ public class FavouritesListAdapter extends RealmBaseAdapter {
         this.favNames = favNames;
     }
 
+    /**
+     * Create and trigger a send intent to share the selected name
+     * @param idx - the index of the name in the favourites list to send
+     */
     public void onSendBtnClicked(int idx){
         String selectedName = favNames.get(idx).getName();
         Intent myIntent = new Intent(Intent.ACTION_SEND);
@@ -94,12 +110,18 @@ public class FavouritesListAdapter extends RealmBaseAdapter {
 
     }
 
+
+    /**
+     * Deletes a name from the favourites list and the database
+     * @param idx - the index of the name in the favourites list to delete
+     */
     public void onDeleteBtnClicked(int idx){
         Name selectedName = favNames.get(idx);
         String nameText = selectedName.getName();
         long id = selectedName.getId();
-        realmService.deleteNameWithId(id);
+        realmService.deleteNameWithId(id); // Delete the name from the Realm database
 
+        // Display a Toast to the user, confirming that the name was deleted from their favourites list
         CharSequence text = nameText + " deleted from favourites.";
         int duration = Toast.LENGTH_SHORT;
         Toast toast = Toast.makeText(context, text, duration);

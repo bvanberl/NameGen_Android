@@ -14,16 +14,25 @@ import java.util.List;
 
 import Jama.Matrix;
 
+/**
+ * Defines the parameters of an RNN model
+ */
 public class Parameters {
 
-    public Matrix Wax;
-    public Matrix Waa;
-    public Matrix Wya;
-    public Matrix b;
-    public Matrix by;
+    public Matrix Wax; // Weight matrix multiplying the input
+    public Matrix Waa; // Weight matrix multiplying the hidden state
+    public Matrix Wya; // Weight matrix connecting hidden state to output
+    public Matrix b; // Bias vector
+    public Matrix by; // Bias connecting hidden state to output
 
     private Context context;
 
+    /**
+     * Initializes the weight and bias matrices. Loads the numeric pre-trained parameters from a CSV
+     * file, based on the specified gender
+     * @param g - the gender specified for the model
+     * @param c - the current application context
+     */
     public Parameters(Gender g, Context c){
         context = c;
         if(g == Gender.MALE){
@@ -52,6 +61,11 @@ public class Parameters {
         }
     }
 
+    /**
+     * Reads the content of a CSV file and puts it into a Matrix object
+     * @param inputStream - the CSV file
+     * @return - a Matrix object
+     */
     private Matrix readCSVIntoMatrix(InputStream inputStream){
         List<Double[]> result = new ArrayList<Double[]>();
         BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));

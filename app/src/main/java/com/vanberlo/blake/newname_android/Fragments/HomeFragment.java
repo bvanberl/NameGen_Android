@@ -4,46 +4,25 @@ import com.vanberlo.blake.newname_android.R;
 import com.vanberlo.blake.newname_android.Adapters.RecentsListAdapter;
 
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.ColorFilter;
-import android.graphics.Paint;
-import android.graphics.PorterDuff;
 import android.net.Uri;
-import android.opengl.GLException;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.text.SpannableString;
-import android.text.style.UnderlineSpan;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
-import android.widget.ToggleButton;
 
 import com.vanberlo.blake.newname_android.Enumerations.Gender;
 import com.vanberlo.blake.newname_android.ML.Model;
-import com.vanberlo.blake.newname_android.RealmService;
 
 import java.util.ArrayList;
 
 import static io.realm.internal.SyncObjectServerFacade.getApplicationContext;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link HomeFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link HomeFragment# newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class HomeFragment extends Fragment implements View.OnClickListener {
     private OnFragmentInteractionListener mListener;
 
@@ -51,11 +30,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private TextView newNameTextView;
     private Switch genderToggleButton;
 
-    private ArrayList<Name> arrayHistory;
+    private ArrayList<Name> recentNames; // A record of most recently generated names
     private ListView listViewHistory;
-    private RecentsListAdapter stringArrayAdapter;
-
-    private int latestSelectedIndex;
+    private RecentsListAdapter recentNamesAdapter;
 
     // Required empty public constructor
     public HomeFragment() {}
@@ -65,11 +42,14 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Initialize model
+        // Initialize RNN model
         model = new Model(getApplicationContext());
 
     }
 
+    /**
+     * Set up references to UI elements
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -81,11 +61,10 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         genderToggleButton = (Switch) rootView.findViewById(R.id.toggleGender);
         listViewHistory = (ListView) rootView.findViewById(R.id.listViewHistory);
 
-        //Something with the list
-        arrayHistory = new ArrayList<Name>();
-        stringArrayAdapter = new RecentsListAdapter(getApplicationContext(), arrayHistory);
-        listViewHistory.setAdapter(stringArrayAdapter);
-
+        // Set the the recent names list and its adapter
+        recentNames = new ArrayList<Name>();
+        recentNamesAdapter = new RecentsListAdapter(getApplicationContext(), recentNames);
+        listViewHistory.setAdapter(recentNamesAdapter);
 
         // Set the buttons' on click listeners to this fragment
         Button buttonName = (Button) rootView.findViewById(R.id.buttonName);
@@ -116,25 +95,33 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         void onFragmentInteraction(Uri uri);
     }
 
+    /**
+     * Event handler to receive click events for various views within this fragment
+     * @param v - the view that was clicked
+     */
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.buttonName:
-                onGenerateNameBtnClicked();
+                onGenerateNameBtnClicked(); // Generate a new name
                 break;
             case R.id.listViewHistory:
                 int t = (Integer)v.getId();
                 Object tag = v.getTag();
-                listViewHistory.performClick();
+                listViewHistory.performClick(); // The user tapped on the recent names ListView; pass the event on
                 break;
         }
     }
 
+
+    /**
+     * Uses the RNN model to generate a name
+     */
     public void onGenerateNameBtnClicked(){
-        //Check the toggle button for the gender selected
+        // Get the value of the gender toggle view
         boolean male = (genderToggleButton).isChecked();
 
-        //Generate a male or female name based on the previous variable
+        //Generate a male or female name based on which gender is currently selected
         String generatedNameLower = "";
         if (male){
             generatedNameLower = model.predictName(Gender.MALE);
@@ -147,21 +134,17 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         String generatedNameUpper = generatedNameLower.substring(0, 1).toUpperCase() + generatedNameLower.substring(1);
         Name generatedName;
 
-        //Create a name object out of the name generated to be added to the listview
+        //Create a Name object out of the name generated to be added to the list of recent names
         if(male) {
             generatedName = new Name(generatedNameUpper, Gender.MALE);
         }else{
             generatedName = new Name(generatedNameUpper, Gender.FEMALE);
         }
 
-        //Update the list view, set the text of the main textview to the new name generated
-        arrayHistory.add(0,generatedName);
-        stringArrayAdapter.notifyDataSetChanged();
+        recentNames.add(0,generatedName); // Update the recent names list
+        recentNamesAdapter.notifyDataSetChanged();
         listViewHistory.setClickable(true);
-        newNameTextView.setText(generatedNameUpper);
-
+        newNameTextView.setText(generatedNameUpper); // Set the text of the newNameTextView to the most recent name
     }
-
-
 
 }

@@ -4,6 +4,9 @@ import android.app.Application;
 
 import io.realm.Realm;
 
+/**
+ * Custom Application class for Realm initialization
+ */
 public class CustomApplication extends Application {
 
     @Override
